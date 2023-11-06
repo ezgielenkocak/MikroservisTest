@@ -51,28 +51,28 @@ namespace BorrowsService.Controllers
                 return StatusCode(500, $"Sunucu hatası: {ex.Message}");
             }
         }
-        private void SendMessageTest(int bookId)
-        {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            using (IConnection connection = factory.CreateConnection())
-            using (IModel channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: "book_queue",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+        //private void SendMessageTest(int bookId)
+        //{
+        //    var factory = new ConnectionFactory() { HostName = "localhost" };
+        //    using (IConnection connection = factory.CreateConnection())
+        //    using (IModel channel = connection.CreateModel())
+        //    {
+        //        channel.QueueDeclare(queue: "book_queue",
+        //                             durable: false,
+        //                             exclusive: false,
+        //                             autoDelete: false,
+        //                             arguments: null);
 
-                string message = JsonConvert.SerializeObject(bookId);
-                var body = Encoding.UTF8.GetBytes(message);
+        //        string message = JsonConvert.SerializeObject(bookId);
+        //        var body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish(exchange: "",
-                                     routingKey: "book_queue",
-                                     basicProperties: null,
-                body: body);
-                Console.WriteLine($"BookId: {bookId}");
-            }
-        }
+        //        channel.BasicPublish(exchange: "",
+        //                             routingKey: "book_queue",
+        //                             basicProperties: null,
+        //        body: body);
+        //        Console.WriteLine($"BookId: {bookId}");
+        //    }
+        //}
 
         private void SendMessage<T>(T message)
         {

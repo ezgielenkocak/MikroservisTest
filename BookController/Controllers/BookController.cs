@@ -24,7 +24,7 @@ namespace BookService.Controllers
         }
         private readonly string _connectionString = "Server=DESKTOP-VTNRLAJ;Database=BookDb;Trusted_Connection=True; MultipleActiveResultSets=true; TrustServerCertificate=True";
 
-        public void Listen()
+        private void Listen()
         {
             var factory = new ConnectionFactory
             {
@@ -42,8 +42,9 @@ namespace BookService.Controllers
                 Console.WriteLine(message);
             };
             channel.BasicConsume(queue: "book_queue", autoAck: true, consumer: consumer);
-            Console.ReadKey();
+
         }
+
         private void UpdateBookStatus(int bookId, bool isInside)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
